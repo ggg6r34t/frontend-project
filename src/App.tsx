@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import "./App.css";
 import NavBar from "./components/navBar/NavBar";
-import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 import ProductList from "./components/products/ProductList";
 import FavoriteProductList from "./components/products/FavouriteProductList";
 import CartProductList from "./components/cart/CartProductList";

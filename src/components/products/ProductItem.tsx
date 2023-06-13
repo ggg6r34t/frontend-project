@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import { Container } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
@@ -54,7 +53,7 @@ export default function ProductItem({ product }: Prop) {
           />
         </Link>
       </Card>
-      <Stack direction="row" spacing={4}>
+      <Stack direction="row" spacing={3}>
         <Typography gutterBottom variant="subtitle1">
           {product.title}
         </Typography>
