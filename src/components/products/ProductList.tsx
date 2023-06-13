@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import CircularProgress, {
   CircularProgressProps,
 } from "@mui/material/CircularProgress";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import { v4 as uuid } from "uuid";
 
-import { AppDispatch, RootState } from "../redux/store";
-import { fetchProductData } from "../redux/thunk/products";
+import { AppDispatch, RootState } from "../../redux/store";
+import { fetchProductData } from "../../redux/thunk/products";
 import ProductItem from "./ProductItem";
+import SearchForm from "../form/SearchForm";
 
 function CircularProgressWithLabel(
   props: CircularProgressProps & { value: number }
@@ -49,10 +50,10 @@ export default function ProductList() {
   const isLoading = useSelector((state: RootState) => state.products.isLoading);
   const [progress, setProgress] = useState(10);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const fetchDispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchProductData());
+    fetchDispatch(fetchProductData());
 
     const timer = setInterval(() => {
       setProgress((prevProgress) =>
@@ -62,15 +63,26 @@ export default function ProductList() {
     return () => {
       clearInterval(timer);
     };
-  }, [dispatch]);
+  }, [fetchDispatch]);
 
   if (isLoading) {
     return <CircularProgressWithLabel value={progress} />;
   }
 
   return (
-    <div>
-      <ProductItem products={products} />
-    </div>
+    <Container sx={{ mt: 6 }}>
+      <SearchForm />
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+      >
+        {products.map((product) => (
+          <Grid item xs={2} sm={4} md={4} key={uuid()}>
+            <ProductItem key={uuid()} product={product} />
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }
