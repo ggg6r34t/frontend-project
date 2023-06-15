@@ -1,32 +1,14 @@
-import { useEffect, useState } from "react";
 import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
 import { Paper } from "@mui/material";
 
 export default function Home() {
-  const [sliderHeight, setSliderHeight] = useState(0);
-
-  useEffect(() => {
-    const calculateSliderHeight = () => {
-      const windowHeight = window.innerHeight;
-      const maxHeight = windowHeight > 970 ? windowHeight : 970; // Set a minimum height of 600px
-      setSliderHeight(maxHeight);
-    };
-
-    calculateSliderHeight();
-    window.addEventListener("resize", calculateSliderHeight);
-
-    return () => {
-      window.removeEventListener("resize", calculateSliderHeight);
-    };
-  }, []);
-
   return (
-    <Paper style={{ height: sliderHeight }}>
-      <AwesomeSlider bullets={false} startup={true}>
+    <Paper>
+      <AwesomeSlider bullets={false} startup={true} fillParent={true}>
         <div>
           <video
-            style={{ objectFit: "contain", height: "100%" }}
+            style={{ objectFit: "contain", width: "100%", height: "100%" }}
             autoPlay
             loop
             muted
@@ -40,7 +22,7 @@ export default function Home() {
 
         <div>
           <video
-            style={{ objectFit: "contain", height: "100%" }}
+            style={{ objectFit: "contain", width: "100%", height: "100%" }}
             autoPlay
             loop
             muted
@@ -54,7 +36,7 @@ export default function Home() {
 
         <div>
           <video
-            style={{ objectFit: "contain", height: "100%" }}
+            style={{ objectFit: "contain", width: "100%", height: "100%" }}
             autoPlay
             loop
             muted

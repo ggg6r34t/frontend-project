@@ -11,36 +11,45 @@ import { Link } from "react-router-dom";
 export default function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar
+        component="nav"
+        position="fixed"
+        color="transparent"
+        sx={{ boxShadow: "none" }}
+      >
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, color: "black", minHeight: 150 }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, color: "black" }}
+          >
             News
           </Typography>
-          <Link style={{ textDecoration: "none", color: "white" }} to="/">
+          <Link style={{ textDecoration: "none", color: "black" }} to="/">
             <Button color="inherit">Home</Button>
           </Link>
           <Link
-            style={{ textDecoration: "none", color: "white" }}
+            style={{ textDecoration: "none", color: "black" }}
             to="/products"
           >
             <Button color="inherit">Products</Button>
           </Link>
           <Link
-            style={{ textDecoration: "none", color: "white" }}
+            style={{ textDecoration: "none", color: "black" }}
             to="/favourites"
           >
             <Button color="inherit">Favourites</Button>
           </Link>
-          <Link style={{ textDecoration: "none", color: "white" }} to="/cart">
+          <Link style={{ textDecoration: "none", color: "black" }} to="/cart">
             <Button color="inherit">Cart</Button>
           </Link>
         </Toolbar>
