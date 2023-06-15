@@ -4,12 +4,14 @@ import CircularProgress, {
   CircularProgressProps,
 } from "@mui/material/CircularProgress";
 import { Box, Container, Grid, Typography } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
 import { v4 as uuid } from "uuid";
 
 import { AppDispatch, RootState } from "../../redux/store";
 import { fetchProductData } from "../../redux/thunk/products";
 import ProductItem from "./ProductItem";
 import SearchForm from "../form/SearchForm";
+import { Alert } from "./Alert";
 
 function CircularProgressWithLabel(
   props: CircularProgressProps & { value: number }
@@ -48,9 +50,21 @@ function CircularProgressWithLabel(
 export default function ProductList() {
   const products = useSelector((state: RootState) => state.products.products);
   const isLoading = useSelector((state: RootState) => state.products.isLoading);
+  const { open, vertical, horizontal, handleClick } = Alert();
   const [progress, setProgress] = useState(10);
 
   const fetchDispatch = useDispatch<AppDispatch>();
+
+  function getAnchorOrigin(
+    vertical: "top" | "bottom",
+    horizontal: "left" | "center" | "right"
+  ) {
+    return { vertical, horizontal };
+  }
+
+  function runAlert() {
+    handleClick({ vertical: "top", horizontal: "center" });
+  }
 
   useEffect(() => {
     fetchDispatch(fetchProductData());
@@ -71,6 +85,14 @@ export default function ProductList() {
 
   return (
     <Container sx={{ mt: 6 }}>
+      <div>
+        <Snackbar
+          anchorOrigin={getAnchorOrigin(vertical, "center")}
+          open={open}
+          message="Item added to wishlist"
+          key={vertical + horizontal}
+        />
+      </div>
       <SearchForm />
       <Grid
         container
@@ -79,7 +101,11 @@ export default function ProductList() {
       >
         {products.map((product) => (
           <Grid item xs={2} sm={4} md={4} key={uuid()}>
-            <ProductItem key={uuid()} product={product} />
+            <ProductItem
+              key={uuid()}
+              product={product}
+              runAlert={() => runAlert()}
+            />
           </Grid>
         ))}
       </Grid>

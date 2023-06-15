@@ -1,0 +1,9 @@
+.alert {
+  display: none;
+}
+
+.alert-message {
+  color: #008000;
+  position: relative;
+  top: 2000;
+}

@@ -1,4 +1,6 @@
-import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
@@ -11,17 +13,33 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { productActions } from "../../redux/slices/products";
 import { cartActions } from "../../redux/slices/cart";
 import { Product } from "../../type/types";
-import { Link } from "react-router-dom";
 
 type Prop = {
   product: Product;
+  runAlert: Function;
 };
 
-export default function ProductItem({ product }: Prop) {
+export default function ProductItem({ product, runAlert }: Prop) {
+  const favProducts = useSelector(
+    (state: RootState) => state.products.favProduct
+  );
+
   const functionDispatch = useDispatch();
 
   function addToFavourite(favProd: Product) {
-    functionDispatch(productActions.addFavProduct(favProd));
+    runAlert();
+    const favItemInList = favProducts.some(
+      (favItem) => favItem.title === favProd.title
+    );
+
+    const removeFavItemInList = favProducts.filter(
+      (removeFavItem) => removeFavItem.title !== favProd.title
+    );
+    functionDispatch(productActions.removeFavProduct(removeFavItemInList));
+
+    if (!favItemInList) {
+      functionDispatch(productActions.addFavProduct(favProd));
+    }
   }
 
   function addToCart(cartProd: Product) {
@@ -39,7 +57,11 @@ export default function ProductItem({ product }: Prop) {
           >
             <FavoriteIcon
               sx={{
-                color: true ? "white" : "red",
+                color: favProducts.some(
+                  (favProd) => favProd.title === product.title
+                )
+                  ? "red"
+                  : "white",
               }}
             />
           </IconButton>

@@ -5,8 +5,8 @@ import "./App.css";
 import NavBar from "./components/navBar/NavBar";
 import Home from "./pages/home/Home";
 import ProductList from "./components/products/ProductList";
-import FavoriteProductList from "./components/products/FavouriteProductList";
-import CartProductList from "./components/cart/CartProductList";
+import ProductWishList from "./components/wishList/ProductWishList";
+import ProductCartList from "./components/cart/ProductCartList";
 import ProductDetails from "./components/productDetail/ProductDetails";
 
 const theme = createTheme({
@@ -34,8 +34,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<ProductList />} />
-          <Route path="/favourites" element={<FavoriteProductList />} />
-          <Route path="/cart" element={<CartProductList />} />
+          <Route path="/favourites" element={<ProductWishList />} />
+          <Route path="/cart" element={<ProductCartList />} />
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </ThemeProvider>
