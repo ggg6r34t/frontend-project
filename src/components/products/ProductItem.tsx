@@ -16,7 +16,7 @@ import { Product } from "../../type/types";
 
 type Prop = {
   product: Product;
-  runAlert: Function;
+  runAlert: () => void;
 };
 
 export default function ProductItem({ product, runAlert }: Prop) {
@@ -27,7 +27,6 @@ export default function ProductItem({ product, runAlert }: Prop) {
   const functionDispatch = useDispatch();
 
   function addToFavourite(favProd: Product) {
-    runAlert();
     const favItemInList = favProducts.some(
       (favItem) => favItem.title === favProd.title
     );
@@ -39,6 +38,7 @@ export default function ProductItem({ product, runAlert }: Prop) {
 
     if (!favItemInList) {
       functionDispatch(productActions.addFavProduct(favProd));
+      runAlert();
     }
   }
 

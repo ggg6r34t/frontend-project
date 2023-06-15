@@ -4,14 +4,13 @@ import CircularProgress, {
   CircularProgressProps,
 } from "@mui/material/CircularProgress";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import Snackbar from "@mui/material/Snackbar";
+import { Snackbar, SnackbarOrigin } from "@mui/material";
 import { v4 as uuid } from "uuid";
 
 import { AppDispatch, RootState } from "../../redux/store";
 import { fetchProductData } from "../../redux/thunk/products";
 import ProductItem from "./ProductItem";
 import SearchForm from "../form/SearchForm";
-import { Alert } from "./Alert";
 
 function CircularProgressWithLabel(
   props: CircularProgressProps & { value: number }
@@ -47,13 +46,30 @@ function CircularProgressWithLabel(
   );
 }
 
+type State = {
+  open: boolean;
+  vertical: "top" | "bottom";
+  horizontal: "left" | "center" | "right";
+};
+
 export default function ProductList() {
   const products = useSelector((state: RootState) => state.products.products);
   const isLoading = useSelector((state: RootState) => state.products.isLoading);
-  const { open, vertical, horizontal, handleClick } = Alert();
   const [progress, setProgress] = useState(10);
+  const [state, setState] = useState<State>({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+  const { vertical, horizontal, open } = state;
 
-  const fetchDispatch = useDispatch<AppDispatch>();
+  const handleClick = (newState: SnackbarOrigin) => () => {
+    setState({ open: true, ...newState });
+  };
+
+  setTimeout(() => {
+    setState({ ...state, open: false });
+  }, 3000);
 
   function getAnchorOrigin(
     vertical: "top" | "bottom",
@@ -63,8 +79,10 @@ export default function ProductList() {
   }
 
   function runAlert() {
-    handleClick({ vertical: "top", horizontal: "center" });
+    handleClick({ vertical: "top", horizontal: "center" })();
   }
+
+  const fetchDispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     fetchDispatch(fetchProductData());
@@ -101,11 +119,7 @@ export default function ProductList() {
       >
         {products.map((product) => (
           <Grid item xs={2} sm={4} md={4} key={uuid()}>
-            <ProductItem
-              key={uuid()}
-              product={product}
-              runAlert={() => runAlert()}
-            />
+            <ProductItem key={uuid()} product={product} runAlert={runAlert} />
           </Grid>
         ))}
       </Grid>
