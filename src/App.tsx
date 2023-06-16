@@ -8,6 +8,7 @@ import ProductList from "./components/products/ProductList";
 import ProductWishList from "./components/wishList/ProductWishList";
 import ProductCartList from "./components/cart/ProductCartList";
 import ProductDetails from "./components/productDetail/ProductDetails";
+import Footer from "./components/footer/Footer";
 
 const theme = createTheme({
   typography: {
@@ -24,6 +25,12 @@ const theme = createTheme({
       '"Segoe UI Symbol"',
     ].join(","),
   },
+  palette: {
+    primary: {
+      main: "#0971f1",
+      light: "#ffff",
+    },
+  },
 });
 
 function App() {
@@ -38,6 +45,7 @@ function App() {
           <Route path="/cart" element={<ProductCartList />} />
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
+        <Footer />
       </ThemeProvider>
     </div>
   );

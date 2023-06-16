@@ -3,14 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import CircularProgress, {
   CircularProgressProps,
 } from "@mui/material/CircularProgress";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Pagination,
+  Alert,
+} from "@mui/material";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
 import { v4 as uuid } from "uuid";
 
 import { AppDispatch, RootState } from "../../redux/store";
 import { fetchProductData } from "../../redux/thunk/products";
 import ProductItem from "./ProductItem";
-import SearchForm from "../form/SearchForm";
 
 function CircularProgressWithLabel(
   props: CircularProgressProps & { value: number }
@@ -55,6 +61,7 @@ type State = {
 export default function ProductList() {
   const products = useSelector((state: RootState) => state.products.products);
   const isLoading = useSelector((state: RootState) => state.products.isLoading);
+  const [page, setPage] = useState(1);
   const [progress, setProgress] = useState(10);
   const [state, setState] = useState<State>({
     open: false,
@@ -63,13 +70,19 @@ export default function ProductList() {
   });
   const { vertical, horizontal, open } = state;
 
+  const itemsPerPage = 9;
+
+  const changePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
+    setPage(newPage);
+  };
+
   const handleClick = (newState: SnackbarOrigin) => () => {
     setState({ open: true, ...newState });
   };
 
   setTimeout(() => {
     setState({ ...state, open: false });
-  }, 3000);
+  }, 10000);
 
   function getAnchorOrigin(
     vertical: "top" | "bottom",
@@ -107,22 +120,34 @@ export default function ProductList() {
         <Snackbar
           anchorOrigin={getAnchorOrigin(vertical, "center")}
           open={open}
-          message="Item added to wishlist"
           key={vertical + horizontal}
-        />
+        >
+          <Alert severity="success">"Item added to wishlist"</Alert>
+        </Snackbar>
       </div>
-      <SearchForm />
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {products.map((product) => (
-          <Grid item xs={2} sm={4} md={4} key={uuid()}>
-            <ProductItem key={uuid()} product={product} runAlert={runAlert} />
-          </Grid>
-        ))}
+        {products
+          .slice(page * itemsPerPage - itemsPerPage, page * itemsPerPage)
+          .map((product) => (
+            <Grid item xs={2} sm={4} md={4} key={uuid()}>
+              <ProductItem key={uuid()} product={product} runAlert={runAlert} />
+            </Grid>
+          ))}
       </Grid>
+      <Box mt={8} sx={{ position: "relative", right: 45 }}>
+        <Pagination
+          sx={{ display: "flex", justifyContent: "center" }}
+          showFirstButton
+          showLastButton
+          count={Math.ceil(products.length / itemsPerPage)}
+          size="small"
+          onChange={changePage}
+        />
+      </Box>
     </Container>
   );
 }
