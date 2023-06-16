@@ -55,6 +55,12 @@ export default function NavBar() {
     dispatch(textColorActions.clearTextFormatting());
   };
 
+  // useEffect(() => {
+  //   if (textColor !== "black") {
+  //     dispatch(textColorActions.clearTextFormatting());
+  //   }
+  // }, [dispatch, textColor]);
+
   const toggleDrawer =
     (anchor: "left", open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -146,6 +152,7 @@ export default function NavBar() {
                       <Link
                         style={{ textDecoration: "none", color: "black" }}
                         to="/"
+                        onClick={handleDefaultColor}
                       >
                         <Button
                           sx={{
@@ -179,6 +186,7 @@ export default function NavBar() {
                       <Link
                         style={{ textDecoration: "none", color: "black" }}
                         to="/favourites"
+                        onClick={handleColorChange}
                       >
                         <Button
                           sx={{
@@ -195,6 +203,7 @@ export default function NavBar() {
                       <Link
                         style={{ textDecoration: "none", color: "black" }}
                         to="/cart"
+                        onClick={handleColorChange}
                       >
                         <Button
                           sx={{
@@ -286,12 +295,17 @@ export default function NavBar() {
           <Link
             style={{ textDecoration: "none", color: textColor }}
             to="/favourites"
+            onClick={handleColorChange}
           >
             <Button color="inherit">
               <FavoriteOutlinedIcon fontSize="large" />
             </Button>
           </Link>
-          <Link style={{ textDecoration: "none", color: textColor }} to="/cart">
+          <Link
+            style={{ textDecoration: "none", color: textColor }}
+            to="/cart"
+            onClick={handleColorChange}
+          >
             <Button color="inherit">
               <ShoppingBagOutlinedIcon fontSize="large" />
             </Button>
