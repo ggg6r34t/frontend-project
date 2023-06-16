@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import styled from "styled-components";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
@@ -18,6 +19,15 @@ type Prop = {
   product: Product;
   runAlert: () => void;
 };
+
+const AddToCartButton = styled(Button)`
+  border-color: #3d3c42 !important;
+  color: #3d3c42 !important;
+  &&:hover {
+    color: #c92c6d;
+    background-color: transparent;
+  }
+`;
 
 export default function ProductItem({ product, runAlert }: Prop) {
   const favProducts = useSelector(
@@ -84,13 +94,13 @@ export default function ProductItem({ product, runAlert }: Prop) {
         </Typography>
       </Stack>
 
-      <Button
+      <AddToCartButton
         sx={{ width: 275 }}
         variant="outlined"
         onClick={() => addToCart(product)}
       >
         ADD TO CART
-      </Button>
+      </AddToCartButton>
     </Paper>
   );
 }

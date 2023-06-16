@@ -115,7 +115,7 @@ export default function ProductList() {
   }
 
   return (
-    <Container sx={{ mt: 6 }}>
+    <Container sx={{ mt: 12 }}>
       <div>
         <Snackbar
           anchorOrigin={getAnchorOrigin(vertical, "center")}

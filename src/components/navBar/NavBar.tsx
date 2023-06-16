@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 import { Grid } from "@material-ui/core";
 import AppBar from "@mui/material/AppBar";
 import Drawer from "@mui/material/Drawer";
@@ -12,18 +14,21 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import styled from "styled-components";
 import SearchForm from "../form/SearchForm";
+import { textColorActions } from "../../redux/slices/textColor";
 
 const IconButtonStyled = styled(IconButton)`
   margin-right: 16px;
   color: #00000;
   &:hover {
-    color: lavender;
+    color: #da0037;
     background-color: transparent;
   }
 `;
@@ -34,9 +39,21 @@ const SocialIconsContainer = styled(Grid)`
 `;
 
 export default function NavBar() {
+  const dispatch = useDispatch();
+  const textColor = useSelector(
+    (state: RootState) => state.color.backgroundTextColor
+  );
   const [state, setState] = useState({
     left: false,
   });
+
+  const handleColorChange = () => {
+    dispatch(textColorActions.updateTextColor("black"));
+  };
+
+  const handleDefaultColor = () => {
+    dispatch(textColorActions.clearTextFormatting());
+  };
 
   const toggleDrawer =
     (anchor: "left", open: boolean) =>
@@ -66,7 +83,12 @@ export default function NavBar() {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, color: "/" ? "white" : "black", minHeight: 150 }}
+            sx={{
+              "&:hover": { backgroundColor: "transparent" },
+              mr: 2,
+              color: textColor,
+              minHeight: 150,
+            }}
             onClick={toggleDrawer("left", true)}
           >
             <MenuIcon />
@@ -99,7 +121,10 @@ export default function NavBar() {
                     }}
                   >
                     <Link
-                      style={{ textDecoration: "none", color: "black" }}
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                      }}
                       to="/"
                     >
                       <Typography variant="h1">WEMA</Typography>
@@ -137,6 +162,7 @@ export default function NavBar() {
                       <Link
                         style={{ textDecoration: "none", color: "black" }}
                         to="/products"
+                        onClick={handleColorChange}
                       >
                         <Button
                           sx={{
@@ -192,28 +218,44 @@ export default function NavBar() {
               >
                 <Grid item>
                   <Link to="https://www.facebook.com/" target="_blank">
-                    <IconButtonStyled rel="noopener" aria-label="Facebook">
+                    <IconButtonStyled
+                      sx={{ color: "black" }}
+                      rel="noopener"
+                      aria-label="Facebook"
+                    >
                       <FacebookIcon />
                     </IconButtonStyled>
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link to="https://twitter.com/" target="_blank">
-                    <IconButtonStyled rel="noopener" aria-label="Twitter">
+                    <IconButtonStyled
+                      sx={{ color: "black" }}
+                      rel="noopener"
+                      aria-label="Twitter"
+                    >
                       <TwitterIcon />
                     </IconButtonStyled>
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link to="https://instagram.com/" target="_blank">
-                    <IconButtonStyled rel="noopener" aria-label="Instagram">
+                    <IconButtonStyled
+                      sx={{ color: "black" }}
+                      rel="noopener"
+                      aria-label="Instagram"
+                    >
                       <InstagramIcon />
                     </IconButtonStyled>
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link to="https://youtube.com/" target="_blank">
-                    <IconButtonStyled rel="noopener" aria-label="YouTube">
+                    <IconButtonStyled
+                      sx={{ color: "black" }}
+                      rel="noopener"
+                      aria-label="YouTube"
+                    >
                       <YouTubeIcon />
                     </IconButtonStyled>
                   </Link>
@@ -222,40 +264,37 @@ export default function NavBar() {
             </Box>
           </Drawer>
 
-          <Typography
-            variant="h1"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              color: "/" ? "white" : "black",
-            }}
-          >
-            WEMA
-          </Typography>
-          <SearchForm />
-          {/* <Link
+          <Link
             style={{ textDecoration: "none", color: "/" ? "white" : "black" }}
             to="/"
+            onClick={handleDefaultColor}
           >
-            <Button color="inherit">Home</Button>
+            <Typography
+              variant="h1"
+              component="div"
+              sx={{
+                flexGrow: 1,
+                color: textColor,
+              }}
+            >
+              WEMA
+            </Typography>
           </Link>
+          <Box sx={{ flexGrow: 1 }} />
+          <SearchForm />
+
           <Link
-            style={{ textDecoration: "none", color: "/" ? "white" : "black" }}
-            to="/products"
-          >
-            <Button color="inherit">Products</Button>
-          </Link> */}
-          <Link
-            style={{ textDecoration: "none", color: "/" ? "white" : "black" }}
+            style={{ textDecoration: "none", color: textColor }}
             to="/favourites"
           >
-            <Button color="inherit">Favourites</Button>
+            <Button color="inherit">
+              <FavoriteOutlinedIcon fontSize="large" />
+            </Button>
           </Link>
-          <Link
-            style={{ textDecoration: "none", color: "/" ? "white" : "black" }}
-            to="/cart"
-          >
-            <Button color="inherit">Cart</Button>
+          <Link style={{ textDecoration: "none", color: textColor }} to="/cart">
+            <Button color="inherit">
+              <ShoppingBagOutlinedIcon fontSize="large" />
+            </Button>
           </Link>
         </Toolbar>
       </AppBar>

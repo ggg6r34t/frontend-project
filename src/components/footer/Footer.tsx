@@ -9,7 +9,8 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import styled from "styled-components";
 
 const Root = styled.footer`
-  background-color: #f87474;
+  background-color: #080202;
+  height: 165px;
   padding: 16px;
   margin-top: 30px;
   position: static;
@@ -23,9 +24,8 @@ const Title = styled(Typography)`
 
 const IconButtonStyled = styled(IconButton)`
   margin-right: 16px;
-  color: white;
   &:hover {
-    color: lavender;
+    color: #c92c6d;
     background-color: transparent;
   }
 `;
@@ -41,31 +41,52 @@ function Footer() {
       <Typography sx={{ color: "white" }} variant="body1" component="p">
         &copy; {new Date().getFullYear()} Wema. All rights reserved.
       </Typography>
-      <SocialIconsContainer container alignItems="center">
+
+      <SocialIconsContainer
+        style={{ marginTop: 55 }}
+        container
+        alignItems="center"
+      >
         <Grid item>
           <Link href="https://www.facebook.com/" target="_blank">
-            <IconButtonStyled rel="noopener" aria-label="Facebook">
+            <IconButtonStyled
+              sx={{ color: "white" }}
+              rel="noopener"
+              aria-label="Facebook"
+            >
               <FacebookIcon />
             </IconButtonStyled>
           </Link>
         </Grid>
         <Grid item>
           <Link href="https://twitter.com/" target="_blank">
-            <IconButtonStyled rel="noopener" aria-label="Twitter">
+            <IconButtonStyled
+              sx={{ color: "white" }}
+              rel="noopener"
+              aria-label="Twitter"
+            >
               <TwitterIcon />
             </IconButtonStyled>
           </Link>
         </Grid>
         <Grid item>
           <Link href="https://instagram.com/" target="_blank">
-            <IconButtonStyled rel="noopener" aria-label="Instagram">
+            <IconButtonStyled
+              sx={{ color: "white" }}
+              rel="noopener"
+              aria-label="Instagram"
+            >
               <InstagramIcon />
             </IconButtonStyled>
           </Link>
         </Grid>
         <Grid item>
           <Link href="https://youtube.com/" target="_blank">
-            <IconButtonStyled rel="noopener" aria-label="YouTube">
+            <IconButtonStyled
+              sx={{ color: "white" }}
+              rel="noopener"
+              aria-label="YouTube"
+            >
               <YouTubeIcon />
             </IconButtonStyled>
           </Link>

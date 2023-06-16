@@ -4,12 +4,14 @@ import productReducer from "./slices/products";
 import cartReducer from "./slices/cart";
 import productDetailsReducer from "./slices/productDetail";
 import themeReducer from "./slices/themes";
+import colorReducer from "./slices/textColor";
 
 const store = configureStore({
   reducer: {
     cart: cartReducer,
     products: productReducer,
     productDetails: productDetailsReducer,
+    color: colorReducer,
     themes: themeReducer,
   },
 });

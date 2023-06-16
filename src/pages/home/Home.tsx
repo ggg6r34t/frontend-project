@@ -14,6 +14,19 @@ export default function Home() {
             muted
           >
             <source
+              src={require("../../assets/mixkit-old-fashioned-couple-portrait-in-a-vintage-room-41517.mp4")}
+              type="video/mp4"
+            />
+          </video>
+        </div>
+        <div>
+          <video
+            style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            autoPlay
+            loop
+            muted
+          >
+            <source
               src={require("../../assets/pexels-cottonbro-studio-4727645-3840x2160-50fps.mp4")}
               type="video/mp4"
             />
