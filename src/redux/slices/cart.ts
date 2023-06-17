@@ -5,10 +5,12 @@ import { Product } from "../../type/types";
 
 type CartState = {
   products: Product[];
+  cartItemCount: number;
 };
 
 const initialState: CartState = {
   products: [],
+  cartItemCount: 0,
 };
 
 const searchSlice = createSlice({
@@ -17,6 +19,17 @@ const searchSlice = createSlice({
   reducers: {
     cartProduct(state, action: PayloadAction<Product>) {
       state.products.push(action.payload);
+    },
+    removeFavProduct(state, action: PayloadAction<number>) {
+      state.products = state.products.filter(
+        (cartItem) => cartItem.id !== action.payload
+      );
+    },
+    increment: (state) => {
+      state.cartItemCount += 1;
+    },
+    decrement: (state) => {
+      state.cartItemCount -= 1;
     },
   },
 });

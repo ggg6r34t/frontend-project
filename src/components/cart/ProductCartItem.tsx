@@ -1,12 +1,19 @@
-import { styled } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import ButtonBase from "@mui/material/ButtonBase";
 import DeleteIcon from "@mui/icons-material/Delete";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { styled } from "@mui/material/styles";
 
+import { RootState } from "../../redux/store";
+import { cartActions } from "../../redux/slices/cart";
+import { productActions } from "../../redux/slices/products";
 import { Product } from "../../type/types";
 
 const Img = styled("img")({
@@ -30,13 +37,33 @@ type Prop = {
 };
 
 export default function ProductCartListItem({ cartItem }: Prop) {
+  const counterValue = useSelector(
+    (state: RootState) => state.cart.cartItemCount
+  );
+  // const favProducts = useSelector(
+  //   (state: RootState) => state.products.favProduct
+  // );
+
+  const functionDispatch = useDispatch();
+
+  function increment() {
+    functionDispatch(cartActions.increment());
+  }
+
+  function decrement() {
+    functionDispatch(cartActions.decrement());
+  }
+
+  function removeItemFromFavourite(favProd: number) {
+    functionDispatch(cartActions.removeFavProduct(favProd));
+  }
+
   return (
     <Paper
       elevation={0}
       sx={{
         p: 2,
         margin: "auto",
-
         maxWidth: 900,
         flexGrow: 1,
         overflow: "hidden",
@@ -76,14 +103,31 @@ export default function ProductCartListItem({ cartItem }: Prop) {
               </Typography>
             </Grid>
             <Grid item mr={12}>
-              <Typography variant="subtitle1" component="div">
-                € 19.00
-              </Typography>
+              <Stack>
+                <IconButton onClick={increment}>
+                  <KeyboardArrowUpIcon fontSize="small" />
+                </IconButton>
+
+                <Typography
+                  variant="subtitle1"
+                  component="div"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  {counterValue}
+                </Typography>
+                <IconButton onClick={decrement}>
+                  <KeyboardArrowDownIcon fontSize="small" />
+                </IconButton>
+              </Stack>
             </Grid>
+
             <Grid item mr={4}>
               <IconButton
                 sx={{ cursor: "pointer", color: "black" }}
                 aria-label="delete item"
+                onClick={() => removeItemFromFavourite(cartItem.id)}
               >
                 <DeleteIcon />
               </IconButton>
