@@ -5,6 +5,7 @@ import { Grid } from "@material-ui/core";
 import AppBar from "@mui/material/AppBar";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
+import { TextField } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,6 +24,30 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import styled from "styled-components";
 import SearchForm from "../form/SearchForm";
 import { textColorActions } from "../../redux/slices/textColor";
+
+const StyledTextField = styled(TextField)`
+  // working
+  & .MuiFormLabel-root {
+    color: white;
+  }
+  & .MuiInputLabel-root {
+    color: white !important;
+  }
+
+  // & .MuiInput-root:hover:not:before {
+  //   color: white;
+  // }
+
+  & .MuiInput-root:before {
+    border-color: white;
+  }
+  & .MuiInput-root:after {
+    border-color: white;
+  }
+  & .MuiInputBase-input {
+    color: white;
+  }
+`;
 
 const IconButtonStyled = styled(IconButton)`
   margin-right: 16px;
@@ -132,6 +157,7 @@ export default function NavBar() {
                         color: "black",
                       }}
                       to="/"
+                      onClick={handleDefaultColor}
                     >
                       <Typography variant="h1">WEMA</Typography>
                     </Link>
@@ -167,7 +193,10 @@ export default function NavBar() {
                     </ListItem>
                     <ListItem disablePadding>
                       <Link
-                        style={{ textDecoration: "none", color: "black" }}
+                        style={{
+                          textDecoration: "none",
+                          color: "black",
+                        }}
                         to="/products"
                         onClick={handleColorChange}
                       >
@@ -290,7 +319,26 @@ export default function NavBar() {
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 1 }} />
-          <SearchForm />
+          {textColor === "white" ? (
+            <Link
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+              to="/products"
+              onClick={handleColorChange}
+            >
+              <div style={{ marginRight: "75px" }}>
+                <StyledTextField
+                  id="standard-basic"
+                  label="Search Products"
+                  variant="standard"
+                />
+              </div>
+            </Link>
+          ) : (
+            <SearchForm />
+          )}
 
           <Link
             style={{ textDecoration: "none", color: textColor }}
