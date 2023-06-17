@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, Paper, Container, Stack, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -7,8 +8,9 @@ import ProductCartItem from "./ProductCartItem";
 
 export default function CartProductList() {
   const CartProductList = useSelector(
-    (state: RootState) => state.cart.products
+    (state: RootState) => state.cart.cartItems
   );
+  const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
 
   return (
     <Container sx={{ mt: 25, minHeight: 950 }}>
@@ -20,7 +22,7 @@ export default function CartProductList() {
       ))}
       <Paper elevation={0} sx={{ margin: "auto", marginTop: 2, maxWidth: 900 }}>
         <Typography mr={4} align="right">
-          Total amount inc. VAT € 77.20
+          Total amount inc. VAT € {totalAmount}
         </Typography>
       </Paper>
       <Paper
@@ -33,11 +35,48 @@ export default function CartProductList() {
         }}
       >
         <Stack direction="row">
-          <Button variant="outlined" sx={{ ml: 2, mb: 2, mt: 2 }}>
-            Back to Shop
-          </Button>
+          <Link
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
+            to="/products"
+          >
+            <Button
+              size="medium"
+              variant="outlined"
+              sx={{
+                color: "black",
+                width: 150,
+                borderColor: "black",
+                borderRadius: 0,
+                ml: 2,
+                mb: 2,
+                mt: 2,
+                "&:hover": {
+                  borderColor: "black",
+                  backgroundColor: "transparent",
+                },
+              }}
+            >
+              Back to Shop
+            </Button>
+          </Link>
           <Box sx={{ flexGrow: 1 }}></Box>
-          <Button variant="contained" sx={{ mr: 2, mb: 2, mt: 2 }}>
+          <Button
+            size="medium"
+            variant="contained"
+            sx={{
+              width: 150,
+              background: "black",
+              borderColor: "black",
+              borderRadius: 0,
+              mr: 2,
+              mb: 2,
+              mt: 2,
+              "&:hover": { backgroundColor: "black" },
+            }}
+          >
             Checkout
           </Button>
         </Stack>

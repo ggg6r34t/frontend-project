@@ -36,22 +36,22 @@ type Prop = {
 };
 
 export default function ProductCartListItem({ cartItem }: Prop) {
-  const counterValue = useSelector(
-    (state: RootState) => state.cart.cartItemCount
+  const cartQuantity = useSelector(
+    (state: RootState) => state.cart.totalQuantity
   );
 
   const functionDispatch = useDispatch();
 
-  function increment() {
-    functionDispatch(cartActions.increment());
+  function increaseCartQuantity(cartItem: number) {
+    functionDispatch(cartActions.increaseCartQuantity(cartItem));
   }
 
-  function decrement() {
-    functionDispatch(cartActions.decrement());
+  function decreaseCartQuantity(cartItem: number) {
+    functionDispatch(cartActions.decreaseCartQuantity(cartItem));
   }
 
-  function removeItemFromFavourite(favProd: number) {
-    functionDispatch(cartActions.removeFavProduct(favProd));
+  function removeItemFromCart(favProd: number) {
+    functionDispatch(cartActions.removeCarProduct(favProd));
   }
 
   return (
@@ -100,7 +100,7 @@ export default function ProductCartListItem({ cartItem }: Prop) {
             </Grid>
             <Grid item mr={12}>
               <Stack>
-                <IconButton onClick={increment}>
+                <IconButton onClick={() => increaseCartQuantity(cartItem.id)}>
                   <KeyboardArrowUpIcon fontSize="small" />
                 </IconButton>
 
@@ -111,9 +111,9 @@ export default function ProductCartListItem({ cartItem }: Prop) {
                   alignItems="center"
                   justifyContent="center"
                 >
-                  {counterValue}
+                  {cartQuantity}
                 </Typography>
-                <IconButton onClick={decrement}>
+                <IconButton onClick={() => decreaseCartQuantity(cartItem.id)}>
                   <KeyboardArrowDownIcon fontSize="small" />
                 </IconButton>
               </Stack>
@@ -123,7 +123,7 @@ export default function ProductCartListItem({ cartItem }: Prop) {
               <IconButton
                 sx={{ cursor: "pointer", color: "black" }}
                 aria-label="delete item"
-                onClick={() => removeItemFromFavourite(cartItem.id)}
+                onClick={() => removeItemFromCart(cartItem.id)}
               >
                 <DeleteIcon />
               </IconButton>
