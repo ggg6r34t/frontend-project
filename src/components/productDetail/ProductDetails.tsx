@@ -61,7 +61,7 @@ export default function ProductDetails() {
   }
 
   return (
-    <Container sx={{ mt: 20, minHeight: 950 }}>
+    <Container sx={{ mt: 20, mb: 15, minHeight: 950 }}>
       <div>
         <Snackbar
           anchorOrigin={getAnchorOrigin(vertical, "center")}
