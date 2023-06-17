@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import Stack from "@mui/material/Stack";
-import { Paper, Grid, Typography, IconButton } from "@mui/material";
+import { Grid, Typography, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
 
