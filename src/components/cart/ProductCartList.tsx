@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 import { RootState } from "../../redux/store";
 import ProductCartItem from "./ProductCartItem";
@@ -10,7 +10,10 @@ export default function CartProductList() {
   );
 
   return (
-    <Container sx={{ mt: 20, minHeight: 950 }}>
+    <Container sx={{ mt: 25, minHeight: 950 }}>
+      <Typography mb={4} variant="h3" align="center">
+        Cart
+      </Typography>
       {CartProductList?.map((cartItem) => (
         <ProductCartItem key={cartItem.id} cartItem={cartItem} />
       ))}
