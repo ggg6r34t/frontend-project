@@ -13,7 +13,6 @@ import { styled } from "@mui/material/styles";
 
 import { RootState } from "../../redux/store";
 import { cartActions } from "../../redux/slices/cart";
-import { productActions } from "../../redux/slices/products";
 import { Product } from "../../type/types";
 
 const Img = styled("img")({
@@ -40,9 +39,6 @@ export default function ProductCartListItem({ cartItem }: Prop) {
   const counterValue = useSelector(
     (state: RootState) => state.cart.cartItemCount
   );
-  // const favProducts = useSelector(
-  //   (state: RootState) => state.products.favProduct
-  // );
 
   const functionDispatch = useDispatch();
 
