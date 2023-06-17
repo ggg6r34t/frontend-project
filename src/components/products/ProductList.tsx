@@ -1,16 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CircularProgress, {
-  CircularProgressProps,
-} from "@mui/material/CircularProgress";
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  Pagination,
-  Alert,
-} from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Box, Container, Grid, Pagination, Alert } from "@mui/material";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
 import { v4 as uuid } from "uuid";
 
@@ -47,7 +38,7 @@ export default function ProductList() {
 
   setTimeout(() => {
     setState({ ...state, open: false });
-  }, 10000);
+  }, 5000);
 
   function getAnchorOrigin(
     vertical: "top" | "bottom",

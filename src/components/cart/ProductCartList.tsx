@@ -1,5 +1,9 @@
 import { useSelector } from "react-redux";
+import { Container } from "@mui/material";
+import { v4 as uuid } from "uuid";
+
 import { RootState } from "../../redux/store";
+import ProductCartListItem from "./ProductCartListItem";
 
 export default function CartProductList() {
   const CartProductList = useSelector(
@@ -7,13 +11,10 @@ export default function CartProductList() {
   );
 
   return (
-    <div>
-      CartProductList
+    <Container sx={{ mt: 20, minHeight: 950 }}>
       {CartProductList?.map((cartItem) => (
-        <div key={cartItem.id}>
-          <p>{cartItem.title}</p>
-        </div>
+        <ProductCartListItem key={uuid()} cartItem={cartItem} />
       ))}
-    </div>
+    </Container>
   );
 }
