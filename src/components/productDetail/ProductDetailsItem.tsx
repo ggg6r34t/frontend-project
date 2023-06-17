@@ -56,58 +56,56 @@ export default function ProductDetailsItem({ productDetail, runAlert }: Prop) {
   }
 
   return (
-    <Container sx={{ mt: 25 }}>
-      <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
-      >
-        <Grid item xs={2} sm={4} md={8} key={productDetail.id}>
-          <Card elevation={0} sx={{ maxWidth: 575 }}>
-            <CardActions disableSpacing>
-              <IconButton
-                sx={{ position: "relative", top: 50, left: 525 }}
-                aria-label="add to favorites"
-                onClick={() => addToFavourite(productDetail)}
-              >
-                <FavoriteIcon
-                  sx={{
-                    color: favProducts.some(
-                      (favProd) => favProd.title === productDetail.title
-                    )
-                      ? "black"
-                      : "white",
-                  }}
-                />
-              </IconButton>
-            </CardActions>
-            <CardMedia
-              sx={{ height: 485, backgroundRepeat: "no-repeat" }}
-              image={productDetail.images[0]}
-              title={productDetail.title}
-            />
-          </Card>
-        </Grid>
-
-        <Grid item xs={6} md={4} sx={{ mt: 15 }}>
-          <Typography mb={2} fontWeight="bold" gutterBottom variant="h5">
-            {productDetail.title}
-          </Typography>
-          <Typography mb={2} gutterBottom variant="body1">
-            {productDetail.description}
-          </Typography>
-          <Typography mb={2} gutterBottom variant="subtitle1">
-            {productDetail.price} EUR
-          </Typography>
-          <AddToCartButton
-            sx={{ width: 358 }}
-            variant="outlined"
-            onClick={() => addToCart(productDetail)}
-          >
-            ADD TO CART
-          </AddToCartButton>
-        </Grid>
+    <Grid
+      container
+      spacing={{ xs: 2, md: 3 }}
+      columns={{ xs: 4, sm: 8, md: 12 }}
+    >
+      <Grid item xs={2} sm={4} md={8} key={productDetail.id}>
+        <Card elevation={0} sx={{ maxWidth: 575 }}>
+          <CardActions disableSpacing>
+            <IconButton
+              sx={{ position: "relative", top: 50, left: 525 }}
+              aria-label="add to favorites"
+              onClick={() => addToFavourite(productDetail)}
+            >
+              <FavoriteIcon
+                sx={{
+                  color: favProducts.some(
+                    (favProd) => favProd.title === productDetail.title
+                  )
+                    ? "black"
+                    : "white",
+                }}
+              />
+            </IconButton>
+          </CardActions>
+          <CardMedia
+            sx={{ height: 485, backgroundRepeat: "no-repeat" }}
+            image={productDetail.images[0]}
+            title={productDetail.title}
+          />
+        </Card>
       </Grid>
-    </Container>
+
+      <Grid item xs={6} md={4} sx={{ mt: 15 }}>
+        <Typography mb={2} fontWeight="bold" gutterBottom variant="h5">
+          {productDetail.title}
+        </Typography>
+        <Typography mb={2} gutterBottom variant="body1">
+          {productDetail.description}
+        </Typography>
+        <Typography mb={2} gutterBottom variant="subtitle1">
+          {productDetail.price} EUR
+        </Typography>
+        <AddToCartButton
+          sx={{ width: 358 }}
+          variant="outlined"
+          onClick={() => addToCart(productDetail)}
+        >
+          ADD TO CART
+        </AddToCartButton>
+      </Grid>
+    </Grid>
   );
 }

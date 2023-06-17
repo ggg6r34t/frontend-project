@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box, Container, Grid, Pagination, Alert } from "@mui/material";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
-import { v4 as uuid } from "uuid";
 
 import { AppDispatch, RootState } from "../../redux/store";
 import { fetchProductData } from "../../redux/thunk/products";
@@ -93,8 +92,12 @@ export default function ProductList() {
         {products
           .slice(page * itemsPerPage - itemsPerPage, page * itemsPerPage)
           .map((product) => (
-            <Grid item xs={2} sm={4} md={4} key={uuid()}>
-              <ProductItem key={uuid()} product={product} runAlert={runAlert} />
+            <Grid item xs={2} sm={4} md={4} key={product.id}>
+              <ProductItem
+                key={product.id}
+                product={product}
+                runAlert={runAlert}
+              />
             </Grid>
           ))}
       </Grid>

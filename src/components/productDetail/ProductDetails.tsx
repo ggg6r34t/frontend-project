@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Snackbar, SnackbarOrigin, Alert } from "@mui/material";
+import { Snackbar, SnackbarOrigin, Alert, Container } from "@mui/material";
 
 import { AppDispatch, RootState } from "../../redux/store";
 import { fetchProductDetails } from "../../redux/thunk/products";
@@ -61,7 +61,7 @@ export default function ProductDetails() {
   }
 
   return (
-    <div>
+    <Container sx={{ mt: 20, minHeight: 950 }}>
       <div>
         <Snackbar
           anchorOrigin={getAnchorOrigin(vertical, "center")}
@@ -78,6 +78,6 @@ export default function ProductDetails() {
           runAlert={runAlert}
         />
       ))}
-    </div>
+    </Container>
   );
 }
