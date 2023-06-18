@@ -44,14 +44,16 @@ export default function ProductCartListItem({ cartItem }: Prop) {
 
   function increaseCartQuantity(cartItem: number) {
     functionDispatch(cartActions.increaseCartQuantity(cartItem));
+    functionDispatch(cartActions.getTotalQuantity());
   }
 
   function decreaseCartQuantity(cartItem: number) {
     functionDispatch(cartActions.decreaseCartQuantity(cartItem));
+    functionDispatch(cartActions.getTotalQuantity());
   }
 
   function removeItemFromCart(favProd: number) {
-    functionDispatch(cartActions.removeCarProduct(favProd));
+    functionDispatch(cartActions.removeCartProduct(favProd));
   }
 
   return (

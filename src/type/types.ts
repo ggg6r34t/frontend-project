@@ -11,7 +11,6 @@ export type Product = {
     createionAt: string;
     updatedAt: string;
   };
-
   cartQuantity: number;
   total: number;
   quantity: number;
