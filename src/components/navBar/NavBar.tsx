@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
+import Badge from "@mui/material/Badge";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -63,6 +64,28 @@ const SocialIconsContainer = styled(Grid)`
   margin-bottom: 16px;
 `;
 
+const StyledWhiteFavouriteBadge = styled(Badge)`
+  & .MuiBadge-badge {
+    position: absolute;
+    right: 17.5px;
+    top: 16px;
+    background: transparent;
+    color: white;
+    margin: 0;
+  }
+`;
+
+const StyledCartBadge = styled(Badge)`
+  & .MuiBadge-badge {
+    position: absolute;
+    top: 29px;
+    padding: "0 4px";
+    background: black;
+    color: white;
+    margin: 0;
+  }
+`;
+
 export default function NavBar() {
   const dispatch = useDispatch();
   const textColor = useSelector(
@@ -79,12 +102,6 @@ export default function NavBar() {
   const handleDefaultColor = () => {
     dispatch(textColorActions.clearTextFormatting());
   };
-
-  // useEffect(() => {
-  //   if (textColor !== "black") {
-  //     dispatch(textColorActions.clearTextFormatting());
-  //   }
-  // }, [dispatch, textColor]);
 
   const toggleDrawer =
     (anchor: "left", open: boolean) =>
@@ -345,18 +362,30 @@ export default function NavBar() {
             to="/favourites"
             onClick={handleColorChange}
           >
-            <Button color="inherit">
-              <FavoriteOutlinedIcon fontSize="large" />
-            </Button>
+            <IconButton color="inherit" aria-label="wishlist">
+              {textColor === "white" ? (
+                <FavoriteOutlinedIcon fontSize="large" />
+              ) : (
+                <StyledWhiteFavouriteBadge badgeContent={4}>
+                  <FavoriteOutlinedIcon fontSize="large" />
+                </StyledWhiteFavouriteBadge>
+              )}
+            </IconButton>
           </Link>
           <Link
             style={{ textDecoration: "none", color: textColor }}
             to="/cart"
             onClick={handleColorChange}
           >
-            <Button color="inherit">
-              <ShoppingBagOutlinedIcon fontSize="large" />
-            </Button>
+            <IconButton color="inherit" aria-label="cart">
+              {textColor === "white" ? (
+                <ShoppingBagOutlinedIcon fontSize="large" />
+              ) : (
+                <StyledCartBadge color="secondary" badgeContent={17}>
+                  <ShoppingBagOutlinedIcon fontSize="large" />
+                </StyledCartBadge>
+              )}
+            </IconButton>
           </Link>
         </Toolbar>
       </AppBar>
