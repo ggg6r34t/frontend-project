@@ -1,22 +1,77 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Box, Paper, Container, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Container,
+  Stack,
+  Snackbar,
+  SnackbarOrigin,
+  Alert,
+  Typography,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 
 import { RootState } from "../../redux/store";
 import ProductCartItem from "./ProductCartItem";
 
+type State = {
+  open: boolean;
+  vertical: "top" | "bottom";
+  horizontal: "left" | "center" | "right";
+};
+
 export default function CartProductList() {
   const CartProducts = useSelector((state: RootState) => state.cart.cartItems);
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
 
+  const [state, setState] = useState<State>({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+  const { vertical, horizontal, open } = state;
+
+  const handleClick = (newState: SnackbarOrigin) => () => {
+    setState({ open: true, ...newState });
+  };
+
+  setTimeout(() => {
+    setState({ ...state, open: false });
+  }, 5000);
+
+  function getAnchorOrigin(
+    vertical: "top" | "bottom",
+    horizontal: "left" | "center" | "right"
+  ) {
+    return { vertical, horizontal };
+  }
+
+  function runAlert() {
+    handleClick({ vertical: "top", horizontal: "center" })();
+  }
+
   return (
     <Container sx={{ mt: 25, minHeight: 950 }}>
+      <div>
+        <Snackbar
+          anchorOrigin={getAnchorOrigin(vertical, "center")}
+          open={open}
+          key={vertical + horizontal}
+        >
+          <Alert severity="success">"Item added to wishlist"</Alert>
+        </Snackbar>
+      </div>
       <Typography mb={4} variant="h3" align="center">
         Cart
       </Typography>
       {CartProducts?.map((cartItem) => (
-        <ProductCartItem key={cartItem.id} cartItem={cartItem} />
+        <ProductCartItem
+          key={cartItem.id}
+          cartItem={cartItem}
+          runAlert={runAlert}
+        />
       ))}
       <Paper elevation={0} sx={{ margin: "auto", marginTop: 2, maxWidth: 900 }}>
         <Typography mr={4} align="right">

@@ -14,4 +14,5 @@ export type Product = {
   cartQuantity: number;
   total: number;
   quantity: number;
+  itemTotal: number;
 };

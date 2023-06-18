@@ -41,6 +41,20 @@ export default function Home() {
             muted
           >
             <source
+              src={require("../../assets/mixkit-mafia-man-and-woman-in-a-dark-playroom-41911.mp4")}
+              type="video/mp4"
+            />
+          </video>
+        </div>
+
+        <div>
+          <video
+            style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            autoPlay
+            loop
+            muted
+          >
+            <source
               src={require("../../assets/pexels-cottonbro-studio-7969938-4096x2160-25fps.mp4")}
               type="video/mp4"
             />

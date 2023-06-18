@@ -11,7 +11,7 @@ type CartState = {
 
 const initialState: CartState = {
   cartItems: [],
-  totalQuantity: 1,
+  totalQuantity: 0,
   totalAmount: 0,
 };
 
@@ -57,20 +57,16 @@ const cartSlice = createSlice({
       }
     },
     getTotalQuantity: (state) => {
-      const { total, quantity } = state.cartItems.reduce(
-        (cartTotalQuantity, cartItem) => {
-          const { price, cartQuantity } = cartItem;
-          const itemTotal = price * cartQuantity;
-
-          cartTotalQuantity.total += itemTotal;
-          cartTotalQuantity.quantity += cartQuantity;
-
-          return cartTotalQuantity;
-        },
-        { total: 0, quantity: 0 }
+      const totalQuantity = state.cartItems.reduce(
+        (quantity, cartItem) => quantity + cartItem.cartQuantity,
+        0
       );
-      state.totalAmount = total;
-      state.totalQuantity = quantity;
+      const totalAmount = state.cartItems.reduce(
+        (amount, cartItem) => amount + cartItem.price * cartItem.cartQuantity,
+        0
+      );
+      state.totalQuantity = totalQuantity;
+      state.totalAmount = totalAmount;
     },
   },
 });

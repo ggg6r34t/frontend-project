@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import ButtonBase from "@mui/material/ButtonBase";
+import { Button, ButtonBase } from "@mui/material/";
 import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -13,6 +13,7 @@ import { styled } from "@mui/material/styles";
 
 import { RootState } from "../../redux/store";
 import { cartActions } from "../../redux/slices/cart";
+import { productActions } from "../../redux/slices/products";
 import { Product } from "../../type/types";
 
 const Img = styled("img")({
@@ -33,14 +34,35 @@ const StyledTypography = styled(Typography)(() => ({
 
 type Prop = {
   cartItem: Product;
+  runAlert: () => void;
 };
 
-export default function ProductCartListItem({ cartItem }: Prop) {
+export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
+  // const itemQuantity = useSelector((state: RootState) => state.cart)
   const cartQuantity = useSelector(
     (state: RootState) => state.cart.totalQuantity
   );
+  const favProducts = useSelector(
+    (state: RootState) => state.products.favProduct
+  );
 
   const functionDispatch = useDispatch();
+
+  function addToFavourite(favProd: Product) {
+    const favItemInList = favProducts.some(
+      (favItem) => favItem.title === favProd.title
+    );
+
+    const removeFavItemInList = favProducts.filter(
+      (removeFavItem) => removeFavItem.title !== favProd.title
+    );
+    functionDispatch(productActions.removeFavProduct(removeFavItemInList));
+
+    if (!favItemInList) {
+      functionDispatch(productActions.addFavProduct(favProd));
+      runAlert();
+    }
+  }
 
   function increaseCartQuantity(cartItem: number) {
     functionDispatch(cartActions.increaseCartQuantity(cartItem));
@@ -91,7 +113,21 @@ export default function ProductCartListItem({ cartItem }: Prop) {
               </StyledTypography>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle2">Add to wishlist</Typography>
+              <Button
+                variant="text"
+                sx={{
+                  color: "black",
+                  fontSize: 11,
+                  margin: 0,
+                  "&:hover": {
+                    borderColor: "black",
+                    backgroundColor: "transparent",
+                  },
+                }}
+                onClick={() => addToFavourite(cartItem)}
+              >
+                <Typography variant="subtitle2">Add to wishlist</Typography>
+              </Button>
             </Grid>
           </Grid>
           <Grid display="flex" alignItems="center" justifyContent="center">
