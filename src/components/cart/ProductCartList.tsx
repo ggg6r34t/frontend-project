@@ -7,9 +7,7 @@ import { RootState } from "../../redux/store";
 import ProductCartItem from "./ProductCartItem";
 
 export default function CartProductList() {
-  const CartProductList = useSelector(
-    (state: RootState) => state.cart.cartItems
-  );
+  const CartProducts = useSelector((state: RootState) => state.cart.cartItems);
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
 
   return (
@@ -17,7 +15,7 @@ export default function CartProductList() {
       <Typography mb={4} variant="h3" align="center">
         Cart
       </Typography>
-      {CartProductList?.map((cartItem) => (
+      {CartProducts?.map((cartItem) => (
         <ProductCartItem key={cartItem.id} cartItem={cartItem} />
       ))}
       <Paper elevation={0} sx={{ margin: "auto", marginTop: 2, maxWidth: 900 }}>

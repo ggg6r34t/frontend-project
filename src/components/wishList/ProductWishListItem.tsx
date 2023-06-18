@@ -59,8 +59,8 @@ export default function ProductWishListItem({ favItem, runAlert }: Prop) {
                 color: favProducts.some(
                   (favProd) => favProd.title === favItem.title
                 )
-                  ? "red"
-                  : "white",
+                  ? "#000000" // black
+                  : "#eeeeee", // off-white
               }}
             />
           </IconButton>

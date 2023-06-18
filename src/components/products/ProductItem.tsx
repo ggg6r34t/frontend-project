@@ -21,6 +21,7 @@ type Prop = {
 };
 
 const AddToCartButton = styled(Button)`
+  border-radius: 0 !important;
   border-color: #3d3c42 !important;
   color: #3d3c42 !important;
   &&:hover {
@@ -70,8 +71,8 @@ export default function ProductItem({ product, runAlert }: Prop) {
                 color: favProducts.some(
                   (favProd) => favProd.title === product.title
                 )
-                  ? "red"
-                  : "white",
+                  ? "#000000" // black
+                  : "#eeeeee", // off-white
               }}
             />
           </IconButton>

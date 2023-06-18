@@ -25,6 +25,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import styled from "styled-components";
 import SearchForm from "../form/SearchForm";
 import { textColorActions } from "../../redux/slices/textColor";
+import { escape } from "querystring";
 
 const StyledTextField = styled(TextField)`
   // working
@@ -88,12 +89,30 @@ const StyledCartBadge = styled(Badge)`
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  const favProducts = useSelector(
+    (state: RootState) => state.products.favProduct
+  );
+  const cartProducts = useSelector((state: RootState) => state.cart.cartItems);
   const textColor = useSelector(
     (state: RootState) => state.color.backgroundTextColor
   );
   const [state, setState] = useState({
     left: false,
   });
+
+  let favoriteCount: number;
+  if (favProducts.length === 0) {
+    favoriteCount = 0;
+  } else {
+    favoriteCount = favProducts.length;
+  }
+
+  let cartItemCount: number;
+  if (cartProducts.length === 0) {
+    cartItemCount = 0;
+  } else {
+    cartItemCount = cartProducts.length;
+  }
 
   const handleColorChange = () => {
     dispatch(textColorActions.updateTextColor("black"));
@@ -366,7 +385,7 @@ export default function NavBar() {
               {textColor === "white" ? (
                 <FavoriteOutlinedIcon fontSize="large" />
               ) : (
-                <StyledWhiteFavouriteBadge badgeContent={4}>
+                <StyledWhiteFavouriteBadge badgeContent={favoriteCount}>
                   <FavoriteOutlinedIcon fontSize="large" />
                 </StyledWhiteFavouriteBadge>
               )}
@@ -381,7 +400,7 @@ export default function NavBar() {
               {textColor === "white" ? (
                 <ShoppingBagOutlinedIcon fontSize="large" />
               ) : (
-                <StyledCartBadge color="secondary" badgeContent={17}>
+                <StyledCartBadge color="secondary" badgeContent={cartItemCount}>
                   <ShoppingBagOutlinedIcon fontSize="large" />
                 </StyledCartBadge>
               )}
