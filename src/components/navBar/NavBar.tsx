@@ -25,7 +25,6 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import styled from "styled-components";
 import SearchForm from "../form/SearchForm";
 import { textColorActions } from "../../redux/slices/textColor";
-import { escape } from "querystring";
 
 const StyledTextField = styled(TextField)`
   // working
