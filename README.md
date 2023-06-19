@@ -60,3 +60,7 @@ ONLY DO THIS PART WHEN YOU HAVE COMPLETED THE REQUIREMENTS PART
 
 6. Cart
    ![](./screenshots/cart.png)
+
+### Deploy Link
+
+https://wem-a.netlify.app
