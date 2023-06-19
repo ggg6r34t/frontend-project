@@ -1,17 +1,27 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { Box, Grid, Typography, IconButton, Stack } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
-import Stack from "@mui/material/Stack";
-import { Grid, Typography, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
 
 import { Product } from "../../type/types";
+import { RootState } from "../../redux/store";
 import { productActions } from "../../redux/slices/products";
 import { cartActions } from "../../redux/slices/cart";
+
+const StyledTypography = styled(Typography)(() => ({
+  maxWidth: "199px",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  display: "-webkit-box",
+  WebkitLineClamp: 1,
+  WebkitBoxOrient: "vertical",
+}));
 
 type Prop = {
   favItem: Product;
@@ -76,20 +86,26 @@ export default function ProductWishListItem({ favItem, runAlert }: Prop) {
         </Link>
       </Card>
       <Stack direction="row" spacing={3}>
-        <Typography gutterBottom variant="subtitle1">
+        <StyledTypography gutterBottom variant="subtitle1">
           {favItem.title}
-        </Typography>
+        </StyledTypography>
         <Typography gutterBottom variant="subtitle1">
-          {favItem.price} EUR
+          € {favItem.price}
         </Typography>
       </Stack>
-
-      <IconButton
-        sx={{ "&:hover": { backgroundColor: "transparent" }, width: 275 }}
-        onClick={() => addToCart(favItem)}
+      <Box
+        component="div"
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        <AddIcon />
-      </IconButton>
+        <IconButton
+          sx={{
+            "&:hover": { backgroundColor: "transparent" },
+          }}
+          onClick={() => addToCart(favItem)}
+        >
+          <AddIcon />
+        </IconButton>
+      </Box>
     </Grid>
   );
 }
