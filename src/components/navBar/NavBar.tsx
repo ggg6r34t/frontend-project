@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
+import { TextField } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
-import { TextField } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,7 +14,6 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
 import Badge from "@mui/material/Badge";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
@@ -23,8 +22,10 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import styled from "styled-components";
+
 import SearchForm from "../form/SearchForm";
 import { textColorActions } from "../../redux/slices/textColor";
+import { RootState } from "../../redux/store";
 
 const StyledTextField = styled(TextField)`
   // working
@@ -249,7 +250,7 @@ export default function NavBar() {
                     <ListItem disablePadding>
                       <Link
                         style={{ textDecoration: "none", color: "black" }}
-                        to="/favourites"
+                        to="/wishlist"
                         onClick={handleColorChange}
                       >
                         <Button
@@ -259,7 +260,24 @@ export default function NavBar() {
                           }}
                           color="inherit"
                         >
-                          <Typography>Favourites</Typography>
+                          <Typography>Wishlist</Typography>
+                        </Button>
+                      </Link>
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <Link
+                        style={{ textDecoration: "none", color: "black" }}
+                        to="/about"
+                        onClick={handleColorChange}
+                      >
+                        <Button
+                          sx={{
+                            "&:hover": { backgroundColor: "transparent" },
+                            textDecoration: "none",
+                          }}
+                          color="inherit"
+                        >
+                          <Typography>About</Typography>
                         </Button>
                       </Link>
                     </ListItem>
@@ -377,7 +395,7 @@ export default function NavBar() {
 
           <Link
             style={{ textDecoration: "none", color: textColor }}
-            to="/favourites"
+            to="/wishlist"
             onClick={handleColorChange}
           >
             <IconButton color="inherit" aria-label="wishlist">

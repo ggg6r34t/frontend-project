@@ -14,7 +14,7 @@ import { styled } from "@mui/material/styles";
 import { RootState } from "../../redux/store";
 import { cartActions } from "../../redux/slices/cart";
 import { productActions } from "../../redux/slices/products";
-import { Product } from "../../type/types";
+import { Cart, Product } from "../../type/types";
 
 const Img = styled("img")({
   margin: "auto",
@@ -33,15 +33,11 @@ const StyledTypography = styled(Typography)(() => ({
 }));
 
 type Prop = {
-  cartItem: Product;
+  cartItem: Cart;
   runAlert: () => void;
 };
 
 export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
-  // const itemQuantity = useSelector((state: RootState) => state.cart)
-  const cartQuantity = useSelector(
-    (state: RootState) => state.cart.totalQuantity
-  );
   const favProducts = useSelector(
     (state: RootState) => state.products.favProduct
   );
@@ -64,12 +60,12 @@ export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
     }
   }
 
-  function increaseCartQuantity(cartItem: number) {
+  function increaseCartQuantity(cartItem: Cart) {
     functionDispatch(cartActions.increaseCartQuantity(cartItem));
     functionDispatch(cartActions.getTotalQuantity());
   }
 
-  function decreaseCartQuantity(cartItem: number) {
+  function decreaseCartQuantity(cartItem: Cart) {
     functionDispatch(cartActions.decreaseCartQuantity(cartItem));
     functionDispatch(cartActions.getTotalQuantity());
   }
@@ -117,7 +113,6 @@ export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
                 variant="text"
                 sx={{
                   color: "black",
-                  fontSize: 11,
                   margin: 0,
                   "&:hover": {
                     borderColor: "black",
@@ -126,7 +121,9 @@ export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
                 }}
                 onClick={() => addToFavourite(cartItem)}
               >
-                <Typography variant="subtitle2">Add to wishlist</Typography>
+                <Typography fontSize={11} variant="subtitle2">
+                  Add to wishlist
+                </Typography>
               </Button>
             </Grid>
           </Grid>
@@ -138,7 +135,7 @@ export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
             </Grid>
             <Grid item mr={12}>
               <Stack>
-                <IconButton onClick={() => increaseCartQuantity(cartItem.id)}>
+                <IconButton onClick={() => increaseCartQuantity(cartItem)}>
                   <KeyboardArrowUpIcon fontSize="small" />
                 </IconButton>
 
@@ -149,9 +146,9 @@ export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
                   alignItems="center"
                   justifyContent="center"
                 >
-                  {cartQuantity}
+                  {cartItem.cartQuantity}
                 </Typography>
-                <IconButton onClick={() => decreaseCartQuantity(cartItem.id)}>
+                <IconButton onClick={() => decreaseCartQuantity(cartItem)}>
                   <KeyboardArrowDownIcon fontSize="small" />
                 </IconButton>
               </Stack>

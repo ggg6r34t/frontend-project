@@ -18,7 +18,7 @@ type State = {
   horizontal: "left" | "center" | "right";
 };
 
-export default function FavoriteProductList() {
+export default function ProductWishList() {
   const favProductList = useSelector(
     (state: RootState) => state.products.favProduct
   );
@@ -60,7 +60,7 @@ export default function FavoriteProductList() {
         </Snackbar>
       </div>
       <Typography mb={4} variant="h3" align="center">
-        Favorite Products
+        Wishlist
       </Typography>
       <Grid
         container
