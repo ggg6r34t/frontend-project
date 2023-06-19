@@ -43,6 +43,7 @@ export default function ProductWishListItem({ favItem, runAlert }: Prop) {
 
   function addToCart(cartProd: Product) {
     functionDispatch(cartActions.addCartProduct(cartProd));
+    functionDispatch(cartActions.getTotalQuantity());
   }
 
   return (

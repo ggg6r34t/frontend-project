@@ -53,6 +53,7 @@ export default function ProductDetailsItem({ productDetail, runAlert }: Prop) {
 
   function addToCart(cartProd: Product) {
     functionDispatch(cartActions.addCartProduct(cartProd));
+    functionDispatch(cartActions.getTotalQuantity());
   }
 
   return (
