@@ -1,12 +1,15 @@
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
-import { Link } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import styled from "styled-components";
+
+import { textColorActions } from "../../redux/slices/textColor";
 
 const Root = styled.footer`
   background-color: #080202;
@@ -35,9 +38,24 @@ const SocialIconsContainer = styled(Grid)`
 `;
 
 function Footer() {
+  const dispatch = useDispatch();
+
+  const handleDefaultColor = () => {
+    dispatch(textColorActions.clearTextFormatting());
+  };
+
   return (
     <Root>
-      <Title variant="h4">Wema</Title>
+      <Link
+        style={{
+          textDecoration: "none",
+          color: "black",
+        }}
+        to="/"
+        onClick={handleDefaultColor}
+      >
+        <Title variant="h4">WEMA</Title>
+      </Link>
       <Typography sx={{ color: "white" }} variant="body1" component="p">
         &copy; {new Date().getFullYear()} Wema. All rights reserved.
       </Typography>
@@ -48,7 +66,7 @@ function Footer() {
         alignItems="center"
       >
         <Grid item>
-          <Link href="https://www.facebook.com/" target="_blank">
+          <Link to="https://www.facebook.com/" target="_blank">
             <IconButtonStyled
               sx={{ color: "white" }}
               rel="noopener"
@@ -59,7 +77,7 @@ function Footer() {
           </Link>
         </Grid>
         <Grid item>
-          <Link href="https://twitter.com/" target="_blank">
+          <Link to="https://twitter.com/" target="_blank">
             <IconButtonStyled
               sx={{ color: "white" }}
               rel="noopener"
@@ -70,7 +88,7 @@ function Footer() {
           </Link>
         </Grid>
         <Grid item>
-          <Link href="https://instagram.com/" target="_blank">
+          <Link to="https://instagram.com/" target="_blank">
             <IconButtonStyled
               sx={{ color: "white" }}
               rel="noopener"
@@ -81,7 +99,7 @@ function Footer() {
           </Link>
         </Grid>
         <Grid item>
-          <Link href="https://youtube.com/" target="_blank">
+          <Link to="https://youtube.com/" target="_blank">
             <IconButtonStyled
               sx={{ color: "white" }}
               rel="noopener"
