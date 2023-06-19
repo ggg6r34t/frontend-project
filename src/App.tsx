@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Outlet, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import "./App.css";
@@ -35,6 +35,9 @@ const theme = createTheme({
 });
 
 function App() {
+  const location = useLocation();
+  const shouldRenderFooter = !["/"].includes(location.pathname);
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -47,7 +50,8 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
-        <Footer />
+        <Outlet />
+        {shouldRenderFooter && <Footer />}
       </ThemeProvider>
     </div>
   );
