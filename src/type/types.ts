@@ -16,7 +16,6 @@ export type Product = {
 export type Cart = Product & {
   cartQuantity: number;
   total: number;
-  quantity: number;
 };
 
 export type SortOrder = "asc" | "desc";

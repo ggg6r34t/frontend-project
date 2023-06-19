@@ -62,7 +62,7 @@ const cartSlice = createSlice({
       state.totalAmount = totalAmount;
     },
     checkOut: (state) => {
-      state.cartItems = initialState.cartItems;
+      state.cartItems = [];
     },
   },
 });

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Paper,
@@ -14,6 +14,7 @@ import {
 import Button from "@mui/material/Button";
 
 import { RootState } from "../../redux/store";
+import { cartActions } from "../../redux/slices/cart";
 import ProductCartItem from "./ProductCartItem";
 
 type State = {
@@ -33,6 +34,8 @@ export default function CartProductList() {
     horizontal: "center",
   });
   const { vertical, horizontal, open } = state;
+
+  const functionDispatch = useDispatch();
 
   const handleClick = (newState: SnackbarOrigin) => () => {
     setState({ open: true, ...newState });
@@ -60,6 +63,10 @@ export default function CartProductList() {
       }
     }, 5000);
   }, [cartProducts, navigate]);
+
+  function handleCheckout() {
+    functionDispatch(cartActions.checkOut());
+  }
 
   return (
     <Container sx={{ mt: 25, minHeight: 950 }}>
@@ -148,6 +155,7 @@ export default function CartProductList() {
               mt: 2,
               "&:hover": { backgroundColor: "black" },
             }}
+            onClick={() => handleCheckout()}
           >
             Checkout
           </Button>
