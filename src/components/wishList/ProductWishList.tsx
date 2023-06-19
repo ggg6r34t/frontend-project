@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Grid,
+  Box,
   Snackbar,
   SnackbarOrigin,
   Alert,
   Container,
   Typography,
 } from "@mui/material";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { RootState } from "../../redux/store";
 import ProductWishListItem from "./ProductWishListItem";
@@ -62,6 +64,19 @@ export default function ProductWishList() {
       <Typography mb={4} variant="h3" align="center">
         Wishlist
       </Typography>
+      {favProductList.length === 0 && (
+        <Box component="div">
+          <Typography align="center" paragraph>
+            You have no products in your wishlist yet.
+          </Typography>
+          <Typography align="center" paragraph>
+            Click on the heart next to your wishlist product.
+          </Typography>
+          <Typography align="center" paragraph>
+            <FavoriteBorderIcon />
+          </Typography>
+        </Box>
+      )}
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}

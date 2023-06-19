@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   Box,
@@ -23,7 +23,8 @@ type State = {
 };
 
 export default function CartProductList() {
-  const CartProducts = useSelector((state: RootState) => state.cart.cartItems);
+  const navigate = useNavigate();
+  const cartProducts = useSelector((state: RootState) => state.cart.cartItems);
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
 
   const [state, setState] = useState<State>({
@@ -52,6 +53,14 @@ export default function CartProductList() {
     handleClick({ vertical: "top", horizontal: "center" })();
   }
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (cartProducts.length === 0) {
+        navigate("/products");
+      }
+    }, 5000);
+  }, [cartProducts, navigate]);
+
   return (
     <Container sx={{ mt: 25, minHeight: 950 }}>
       <div>
@@ -66,7 +75,17 @@ export default function CartProductList() {
       <Typography mb={4} variant="h3" align="center">
         Cart
       </Typography>
-      {CartProducts?.map((cartItem) => (
+      {cartProducts.length === 0 && (
+        <Box component="div">
+          <Typography align="center" paragraph>
+            Your cart is empty.
+          </Typography>
+          <Typography align="center" paragraph>
+            Redirecting to products page...
+          </Typography>
+        </Box>
+      )}
+      {cartProducts?.map((cartItem) => (
         <ProductCartItem
           key={cartItem.id}
           cartItem={cartItem}
