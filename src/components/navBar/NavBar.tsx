@@ -61,7 +61,7 @@ const IconButtonStyled = styled(IconButton)`
 `;
 
 const SocialIconsContainer = styled(Grid)`
-  margin-top: 355px;
+  margin-top: 345px;
   margin-bottom: 16px;
 `;
 
