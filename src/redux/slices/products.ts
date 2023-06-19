@@ -1,16 +1,20 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Product } from "../../type/types";
+
+import { RootState } from "../store";
+import { Product, SortOrder } from "../../type/types";
 
 type InitialState = {
   products: Product[];
   favProduct: Product[];
   isLoading: boolean;
+  sortOrder: SortOrder;
 };
 
 const initialState: InitialState = {
   products: [],
   favProduct: [],
   isLoading: true,
+  sortOrder: "asc",
 };
 
 const productSlice = createSlice({
@@ -20,6 +24,9 @@ const productSlice = createSlice({
     getProductData: (state, action: PayloadAction<Product[]>) => {
       state.products = action.payload;
       state.isLoading = false;
+    },
+    setSortOrder: (state, action: PayloadAction<SortOrder>) => {
+      state.sortOrder = action.payload;
     },
     searchProduct(state, action: PayloadAction<string>) {
       const product = state.products.filter((product) =>
@@ -37,6 +44,19 @@ const productSlice = createSlice({
     },
   },
 });
+
+export const selectSortedProducts = (state: RootState): Product[] => {
+  const { products, sortOrder } = state.products;
+  const sortedProducts = [...products];
+  sortedProducts.sort((a, b) => {
+    if (sortOrder === "asc") {
+      return a.price - b.price;
+    } else {
+      return b.price - a.price;
+    }
+  });
+  return sortedProducts;
+};
 
 export const productActions = productSlice.actions;
 const productReducer = productSlice.reducer;

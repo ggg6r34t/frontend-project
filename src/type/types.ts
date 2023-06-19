@@ -18,3 +18,5 @@ export type Cart = Product & {
   total: number;
   quantity: number;
 };
+
+export type SortOrder = "asc" | "desc";
