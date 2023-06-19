@@ -70,8 +70,9 @@ export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
     functionDispatch(cartActions.getTotalQuantity());
   }
 
-  function removeItemFromCart(favProd: number) {
-    functionDispatch(cartActions.removeCartProduct(favProd));
+  function removeItemFromCart(cartItem: Cart) {
+    functionDispatch(cartActions.removeCartProduct(cartItem));
+    functionDispatch(cartActions.getTotalQuantity());
   }
 
   return (
@@ -158,7 +159,7 @@ export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
               <IconButton
                 sx={{ cursor: "pointer", color: "black" }}
                 aria-label="delete item"
-                onClick={() => removeItemFromCart(cartItem.id)}
+                onClick={() => removeItemFromCart(cartItem)}
               >
                 <DeleteIcon />
               </IconButton>
