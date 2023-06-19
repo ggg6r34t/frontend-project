@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import productReducer from "./slices/products";
 import cartReducer from "./slices/cart";
 import productDetailsReducer from "./slices/productDetail";
-import themeReducer from "./slices/themes";
+import themeReducer from "./slices/themeMode";
 import colorReducer from "./slices/textColor";
 
 const store = configureStore({
