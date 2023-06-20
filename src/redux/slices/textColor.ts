@@ -5,22 +5,24 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  backgroundTextColor: "white",
+  backgroundTextColor: localStorage.getItem("backgroundTextColor") || "white",
 };
 
-const appSlice = createSlice({
+const textColorSlice = createSlice({
   name: "color",
   initialState,
   reducers: {
     updateTextColor: (state, action: PayloadAction<string>) => {
       state.backgroundTextColor = action.payload;
+      localStorage.setItem("backgroundTextColor", action.payload);
     },
     clearTextFormatting: (state) => {
       state.backgroundTextColor = "white";
+      localStorage.removeItem("backgroundTextColor");
     },
   },
 });
 
-export const textColorActions = appSlice.actions;
-const colorReducer = appSlice.reducer;
-export default colorReducer;
+export const textColorActions = textColorSlice.actions;
+const textColorReducer = textColorSlice.reducer;
+export default textColorReducer;
