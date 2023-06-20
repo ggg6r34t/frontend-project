@@ -114,7 +114,7 @@ export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
                 variant="text"
                 sx={{
                   color: "black",
-                  // margin: 0,
+                  margin: 0,
                   "&:hover": {
                     borderColor: "black",
                     backgroundColor: "transparent",
