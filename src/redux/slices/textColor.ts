@@ -5,7 +5,7 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  backgroundTextColor: localStorage.getItem("backgroundTextColor") || "white",
+  backgroundTextColor: "white" || localStorage.getItem("backgroundTextColor"),
 };
 
 const textColorSlice = createSlice({
