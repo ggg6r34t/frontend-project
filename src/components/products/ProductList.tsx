@@ -67,7 +67,7 @@ export default function ProductList() {
             display: "inline-flex",
           }}
         >
-          <CircularProgress size={300} />
+          <CircularProgress sx={{ color: "black" }} size={300} />
         </Box>
       </Container>
     );
