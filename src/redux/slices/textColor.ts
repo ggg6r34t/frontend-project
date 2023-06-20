@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type InitialState = {
+type TextColorState = {
   backgroundTextColor: string;
 };
 
-const initialState: InitialState = {
-  backgroundTextColor: "white" || localStorage.getItem("backgroundTextColor"),
+const initialState: TextColorState = {
+  backgroundTextColor:
+    localStorage.getItem("backgroundTextColor") !== null
+      ? localStorage.getItem("backgroundTextColor")!
+      : "white",
 };
 
 const textColorSlice = createSlice({
