@@ -14,7 +14,7 @@ import { styled } from "@mui/material/styles";
 import { RootState } from "../../redux/store";
 import { cartActions } from "../../redux/slices/cart";
 import { productActions } from "../../redux/slices/products";
-import { Cart, Product } from "../../type/types";
+import { CartProduct, Product } from "../../type/types";
 
 const Img = styled("img")({
   margin: "auto",
@@ -33,7 +33,7 @@ const StyledTypography = styled(Typography)(() => ({
 }));
 
 type Prop = {
-  cartItem: Cart;
+  cartItem: CartProduct;
   runAlert: () => void;
 };
 
@@ -60,17 +60,17 @@ export default function ProductCartListItem({ cartItem, runAlert }: Prop) {
     }
   }
 
-  function increaseCartQuantity(cartItem: Cart) {
+  function increaseCartQuantity(cartItem: CartProduct) {
     functionDispatch(cartActions.increaseCartQuantity(cartItem));
     functionDispatch(cartActions.getTotalQuantity());
   }
 
-  function decreaseCartQuantity(cartItem: Cart) {
+  function decreaseCartQuantity(cartItem: CartProduct) {
     functionDispatch(cartActions.decreaseCartQuantity(cartItem));
     functionDispatch(cartActions.getTotalQuantity());
   }
 
-  function removeItemFromCart(cartItem: Cart) {
+  function removeItemFromCart(cartItem: CartProduct) {
     functionDispatch(cartActions.removeCartProduct(cartItem));
     functionDispatch(cartActions.getTotalQuantity());
   }

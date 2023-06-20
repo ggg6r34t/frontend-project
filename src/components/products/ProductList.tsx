@@ -10,8 +10,8 @@ import ProductItem from "./ProductItem";
 
 type State = {
   open: boolean;
-  vertical: "top" | "bottom";
-  horizontal: "left" | "center" | "right";
+  vertical: string;
+  horizontal: string;
 };
 
 export default function ProductList() {
@@ -20,8 +20,8 @@ export default function ProductList() {
   const [page, setPage] = useState(1);
   const [state, setState] = useState<State>({
     open: false,
-    vertical: "top",
-    horizontal: "center",
+    vertical: "",
+    horizontal: "",
   });
   const { vertical, horizontal, open } = state;
 
@@ -39,10 +39,7 @@ export default function ProductList() {
     setState({ ...state, open: false });
   }, 5000);
 
-  function getAnchorOrigin(
-    vertical: "top" | "bottom",
-    horizontal: "left" | "center" | "right"
-  ) {
+  function getAnchorOrigin(vertical: "top", horizontal: "center") {
     return { vertical, horizontal };
   }
 
@@ -77,7 +74,7 @@ export default function ProductList() {
     <Container sx={{ mt: 25 }}>
       <div>
         <Snackbar
-          anchorOrigin={getAnchorOrigin(vertical, "center")}
+          anchorOrigin={getAnchorOrigin("top", "center")}
           open={open}
           key={vertical + horizontal}
         >

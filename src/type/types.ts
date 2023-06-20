@@ -13,7 +13,7 @@ export type Product = {
   };
 };
 
-export type Cart = Product & {
+export type CartProduct = Product & {
   cartQuantity: number;
   total: number;
 };

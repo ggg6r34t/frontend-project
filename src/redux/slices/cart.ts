@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import { Cart } from "../../type/types";
+import { CartProduct } from "../../type/types";
 
 type CartState = {
-  cartItems: Cart[];
+  cartItems: CartProduct[];
   totalAmount: number;
 };
 
@@ -29,13 +29,13 @@ const cartSlice = createSlice({
         state.cartItems.push(cartProduct);
       }
     },
-    removeCartProduct: (state, action: PayloadAction<Cart>) => {
+    removeCartProduct: (state, action: PayloadAction<CartProduct>) => {
       const id = action.payload.id;
       state.cartItems = state.cartItems.filter(
         (cartItem) => cartItem.id !== id
       );
     },
-    increaseCartQuantity: (state, action: PayloadAction<Cart>) => {
+    increaseCartQuantity: (state, action: PayloadAction<CartProduct>) => {
       const id = action.payload.id;
       const cartItemIndex = state.cartItems.findIndex((item) => item.id === id);
 
@@ -43,7 +43,7 @@ const cartSlice = createSlice({
         state.cartItems[cartItemIndex].cartQuantity += 1;
       }
     },
-    decreaseCartQuantity: (state, action: PayloadAction<Cart>) => {
+    decreaseCartQuantity: (state, action: PayloadAction<CartProduct>) => {
       const id = action.payload.id;
       const cartItemIndex = state.cartItems.findIndex((item) => item.id === id);
 

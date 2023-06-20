@@ -16,8 +16,8 @@ import ProductWishListItem from "./ProductWishListItem";
 
 type State = {
   open: boolean;
-  vertical: "top" | "bottom";
-  horizontal: "left" | "center" | "right";
+  vertical: string;
+  horizontal: string;
 };
 
 export default function ProductWishList() {
@@ -26,8 +26,8 @@ export default function ProductWishList() {
   );
   const [state, setState] = useState<State>({
     open: false,
-    vertical: "top",
-    horizontal: "center",
+    vertical: "",
+    horizontal: "",
   });
   const { vertical, horizontal, open } = state;
 
@@ -39,10 +39,7 @@ export default function ProductWishList() {
     setState({ ...state, open: false });
   }, 5000);
 
-  function getAnchorOrigin(
-    vertical: "top" | "bottom",
-    horizontal: "left" | "center" | "right"
-  ) {
+  function getAnchorOrigin(vertical: "top", horizontal: "center") {
     return { vertical, horizontal };
   }
 
@@ -54,7 +51,7 @@ export default function ProductWishList() {
     <Container sx={{ mt: 25, minHeight: 950 }}>
       <div>
         <Snackbar
-          anchorOrigin={getAnchorOrigin(vertical, "center")}
+          anchorOrigin={getAnchorOrigin("top", "center")}
           open={open}
           key={vertical + horizontal}
         >
