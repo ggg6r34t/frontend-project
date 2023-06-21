@@ -48,13 +48,26 @@ const productSlice = createSlice({
 export const selectSortedProducts = (state: RootState): Product[] => {
   const { products, sortOrder } = state.products;
   const sortedProducts = [...products];
+
   sortedProducts.sort((a, b) => {
+    const nameA = a.title.toUpperCase();
+    const nameB = b.title.toUpperCase();
+
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+
+    // If the names are the same, compare by price
     if (sortOrder === "asc") {
       return a.price - b.price;
     } else {
       return b.price - a.price;
     }
   });
+
   return sortedProducts;
 };
 
