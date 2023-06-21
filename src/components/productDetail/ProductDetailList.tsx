@@ -14,8 +14,7 @@ type State = {
 };
 
 export default function ProductDetails() {
-  const param = useParams();
-  const productDetails = useSelector(
+  const productDetail = useSelector(
     (state: RootState) => state.productDetails.productDetails
   );
   const isLoading = useSelector(
@@ -28,10 +27,6 @@ export default function ProductDetails() {
     horizontal: "",
   });
   const { vertical, horizontal, open } = state;
-
-  const fetchDispatch = useDispatch<AppDispatch>();
-
-  const productUrl = `https://api.escuelajs.co/api/v1/products/${param.id}`;
 
   const handleClick = (newState: SnackbarOrigin) => () => {
     setState({ open: true, ...newState });
@@ -49,11 +44,17 @@ export default function ProductDetails() {
     handleClick({ vertical: "top", horizontal: "center" })();
   }
 
-  useEffect(() => {
-    fetchDispatch(fetchProductDetails(productUrl));
-  }, [fetchDispatch, productUrl]);
+  const fetchDispatch = useDispatch<AppDispatch>();
+  const param = useParams();
+  const productId = param.id as string;
 
-  if (isLoading) {
+  useEffect(() => {
+    fetchDispatch(fetchProductDetails(productId));
+  }, [fetchDispatch, productId, param]);
+
+  if (!productDetail) {
+    return <div>no data</div>;
+  } else if (isLoading) {
     return <div>Loading...</div>;
   }
 
@@ -68,13 +69,11 @@ export default function ProductDetails() {
           <Alert severity="success">"Item added to wishlist"</Alert>
         </Snackbar>
       </div>
-      {productDetails.map((product) => (
-        <ProductDetailsItem
-          key={product.id}
-          productDetail={product}
-          runAlert={runAlert}
-        />
-      ))}
+      <ProductDetailsItem
+        key={productDetail.id}
+        productDetail={productDetail}
+        runAlert={runAlert}
+      />
     </Container>
   );
 }

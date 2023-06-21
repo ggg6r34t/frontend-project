@@ -12,9 +12,10 @@ export function fetchProductData() {
   };
 }
 
-export function fetchProductDetails(url: string) {
+export function fetchProductDetails(productId: string) {
+  const productUrl = `https://api.escuelajs.co/api/v1/products/${productId}`;
   return async (dispact: AppDispatch) => {
-    const response = await fetch(url);
+    const response = await fetch(productUrl);
     const productDetailData = await response.json();
     console.log(productDetailData);
     dispact(productDetailsActions.getProductDetails(productDetailData));

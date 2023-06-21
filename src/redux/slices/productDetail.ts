@@ -4,12 +4,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { Product } from "../../type/types";
 
 type ProductDetailsState = {
-  productDetails: Product[];
+  productDetails: null | Product;
   isLoading: boolean;
 };
 
 const initialState: ProductDetailsState = {
-  productDetails: [],
+  productDetails: null,
   isLoading: true,
 };
 
@@ -18,7 +18,7 @@ const searchSlice = createSlice({
   initialState,
   reducers: {
     getProductDetails: (state, action: PayloadAction<Product>) => {
-      state.productDetails.push(action.payload);
+      state.productDetails = action.payload;
       state.isLoading = false;
     },
   },
