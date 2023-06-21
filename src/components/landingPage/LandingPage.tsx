@@ -2,7 +2,7 @@ import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
 import { Paper } from "@mui/material";
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <Paper>
       <AwesomeSlider bullets={false} startup={true} fillParent={true}>

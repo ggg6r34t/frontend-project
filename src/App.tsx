@@ -5,7 +5,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./App.css";
 import NavBar from "./components/navBar/NavBar";
 import Footer from "./components/footer/Footer";
-import Home from "./pages/home/Home";
+import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import WishList from "./pages/WishList";
