@@ -1,29 +1,61 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
-import { Box, Container, Grid, Pagination, Alert } from "@mui/material";
-import { Snackbar, SnackbarOrigin } from "@mui/material";
+import {
+  Box,
+  Container,
+  CircularProgress,
+  Grid,
+  Pagination,
+  Alert,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Snackbar,
+  SnackbarOrigin,
+} from "@mui/material";
+import styled from "styled-components";
 
 import { AppDispatch, RootState } from "../../redux/store";
+import {
+  productActions,
+  selectSortedProducts,
+} from "../../redux/slices/products";
 import { fetchProductData } from "../../redux/thunk/products";
 import ProductItem from "./ProductItem";
+import { SortOrder } from "../../type/types";
+
+const StyledFormControl = styled(FormControl)`
+  // working
+  &.muiformcontrol-root: focused {
+    color: black;
+    border-color: black !important;
+  }
+  & .MuiInputLabel-root:after {
+    color: black !important;
+  }
+`;
 
 type State = {
   open: boolean;
-  vertical: string;
-  horizontal: string;
+  vertical: "top" | "bottom";
+  horizontal: "left" | "center" | "right";
 };
 
 export default function ProductList() {
-  const products = useSelector((state: RootState) => state.products.products);
+  const sortedProducts = useSelector(selectSortedProducts);
   const isLoading = useSelector((state: RootState) => state.products.isLoading);
   const [page, setPage] = useState(1);
   const [state, setState] = useState<State>({
     open: false,
-    vertical: "",
-    horizontal: "",
+    vertical: "top",
+    horizontal: "center",
   });
   const { vertical, horizontal, open } = state;
+  const [sortOption, setSortOption] = useState<
+    "" | "name" | "price" | "az" | "za" | undefined
+  >(undefined);
 
   const itemsPerPage = 9;
 
@@ -39,7 +71,10 @@ export default function ProductList() {
     setState({ ...state, open: false });
   }, 5000);
 
-  function getAnchorOrigin(vertical: "top", horizontal: "center") {
+  function getAnchorOrigin(
+    vertical: "top" | "bottom",
+    horizontal: "left" | "center" | "right"
+  ) {
     return { vertical, horizontal };
   }
 
@@ -53,6 +88,43 @@ export default function ProductList() {
     fetchDispatch(fetchProductData());
   }, [fetchDispatch]);
 
+  // Handles change of sorting option
+  const handleSortChange = (event: SelectChangeEvent) => {
+    const option = event.target.value as
+      | ""
+      | "name"
+      | "price"
+      | "az"
+      | "za"
+      | undefined;
+    if (option === sortOption) {
+      // Clicking on the same option unsets the sort option
+      setSortOption("");
+      // Reset the sort order and return to the original order of all products
+      sortedProducts.sort((a, b) => a.id - b.id);
+      fetchDispatch(productActions.setSortOrder("asc")); // Assuming "asc" is the default sort order
+    } else {
+      setSortOption(option);
+      let sortOrder: SortOrder;
+      if (option === "name") {
+        sortOrder = "asc";
+      } else if (option === "price") {
+        sortOrder = "desc";
+      } else if (option === "az") {
+        sortOrder = "asc";
+        // Perform alphabetical sorting here
+        sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (option === "za") {
+        sortOrder = "desc";
+        // Perform reverse alphabetical sorting here
+        sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
+      } else {
+        // Set a default value for sortOrder if none of the conditions match
+        sortOrder = "asc";
+      }
+      fetchDispatch(productActions.setSortOrder(sortOrder));
+    }
+  };
   if (isLoading) {
     return (
       <Container sx={{ mt: 15, minHeight: 950 }}>
@@ -64,7 +136,7 @@ export default function ProductList() {
             display: "inline-flex",
           }}
         >
-          <CircularProgress sx={{ color: "black" }} size={300} />
+          <CircularProgress size={300} />
         </Box>
       </Container>
     );
@@ -74,19 +146,37 @@ export default function ProductList() {
     <Container sx={{ mt: 25 }}>
       <div>
         <Snackbar
-          anchorOrigin={getAnchorOrigin("top", "center")}
+          anchorOrigin={getAnchorOrigin(vertical, "center")}
           open={open}
           key={vertical + horizontal}
         >
           <Alert severity="success">"Item added to wishlist"</Alert>
         </Snackbar>
       </div>
+      <Box component="div" sx={{ mb: 2 }}>
+        <StyledFormControl sx={{ width: 150 }}>
+          <InputLabel id="sort-select-label">Sort Products</InputLabel>
+          <Select
+            labelId="sort-select-label"
+            id="sort-select"
+            value={sortOption}
+            onChange={handleSortChange}
+            sx={{ color: "black" }}
+          >
+            <MenuItem value="">...</MenuItem>
+            <MenuItem value="name">Sort by Name</MenuItem>
+            <MenuItem value="price">Sort by Price</MenuItem>
+            <MenuItem value="az">A-Z</MenuItem>
+            <MenuItem value="za">Z-A</MenuItem>
+          </Select>
+        </StyledFormControl>
+      </Box>
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {products
+        {sortedProducts
           .slice(page * itemsPerPage - itemsPerPage, page * itemsPerPage)
           .map((product) => (
             <Grid item xs={2} sm={4} md={4} key={product.id}>
@@ -103,7 +193,7 @@ export default function ProductList() {
           sx={{ display: "flex", justifyContent: "center" }}
           showFirstButton
           showLastButton
-          count={Math.ceil(products.length / itemsPerPage)}
+          count={Math.ceil(sortedProducts.length / itemsPerPage)}
           onChange={changePage}
         />
       </Box>
