@@ -14,14 +14,22 @@ export default function ToggleThemeMode() {
 
   const functionDispatch = useDispatch();
 
-  function SwitchMode() {
+  function handleToggleMode() {
     functionDispatch(themeActions.switchTheme());
   }
 
   return (
     <Fragment>
-      <IconButton sx={{ ml: 1 }} onClick={() => SwitchMode()} color="inherit">
-        {themeMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+      <IconButton
+        sx={{ position: "relative", left: 1835 }}
+        onClick={() => handleToggleMode()}
+        color="inherit"
+      >
+        {themeMode === "dark" ? (
+          <Brightness7Icon sx={{ color: "white" }} />
+        ) : (
+          <Brightness4Icon />
+        )}
       </IconButton>
     </Fragment>
   );

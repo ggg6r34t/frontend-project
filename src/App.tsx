@@ -12,6 +12,7 @@ import WishList from "./pages/WishList";
 import Cart from "./pages/Cart";
 import About from "./pages/About";
 import { RootState } from "./redux/store";
+import ToggleThemeMode from "./components/switchTheme/ToggleThemeMode";
 
 function App() {
   const location = useLocation();
@@ -39,7 +40,10 @@ function App() {
   });
 
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{ background: themeMode === "dark" ? "black" : "white" }}
+    >
       <ThemeProvider theme={theme}>
         <NavBar />
         <Routes>
@@ -50,6 +54,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
+        <ToggleThemeMode />
         <Outlet />
         {shouldRenderFooter && <Footer />}
       </ThemeProvider>

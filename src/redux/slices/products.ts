@@ -47,6 +47,7 @@ const productSlice = createSlice({
 
 export const selectSortedProducts = (state: RootState): Product[] => {
   const { products, sortOrder } = state.products;
+
   const sortedProducts = [...products];
 
   sortedProducts.sort((a, b) => {

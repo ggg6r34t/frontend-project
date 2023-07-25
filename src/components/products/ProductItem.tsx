@@ -8,7 +8,7 @@ import CardActions from "@mui/material/CardActions";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
-import { Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import { productActions } from "../../redux/slices/products";
@@ -59,25 +59,30 @@ export default function ProductItem({ product, runAlert }: Prop) {
   }
 
   return (
-    <Paper elevation={0}>
+    <Paper
+      elevation={0}
+      sx={{ backgroundColor: "transparent", maxWidth: 277, marginTop: 2 }}
+    >
       <Card elevation={0} sx={{ maxWidth: 277 }}>
-        <CardActions disableSpacing>
-          <IconButton
-            sx={{ position: "relative", top: 55, left: 225 }}
-            aria-label="add to favorites"
-            onClick={() => addToFavourite(product)}
-          >
-            <FavoriteIcon
-              sx={{
-                color: favProducts.some(
-                  (favProd) => favProd.title === product.title
-                )
-                  ? "#000000" // black
-                  : "#eeeeee", // off-white
-              }}
-            />
-          </IconButton>
-        </CardActions>
+        <Box component="div">
+          <CardActions disableSpacing sx={{ position: "absolute" }}>
+            <IconButton
+              sx={{ position: "relative", top: -7, left: 227 }}
+              aria-label="add to favorites"
+              onClick={() => addToFavourite(product)}
+            >
+              <FavoriteIcon
+                sx={{
+                  color: favProducts.some(
+                    (favProd) => favProd.title === product.title
+                  )
+                    ? "#000000" // black
+                    : "#eeeeee", // off-white
+                }}
+              />
+            </IconButton>
+          </CardActions>
+        </Box>
         <Link to={`/product/${product.id}`}>
           <CardMedia
             component="img"

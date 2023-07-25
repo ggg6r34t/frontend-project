@@ -82,6 +82,7 @@ export default function ProductList() {
     handleClick({ vertical: "top", horizontal: "center" })();
   }
 
+  const functionDispatch = useDispatch();
   const fetchDispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -97,34 +98,25 @@ export default function ProductList() {
       | "az"
       | "za"
       | undefined;
+    let sortOrder: SortOrder;
+
     if (option === sortOption) {
-      // Clicking on the same option unsets the sort option
-      setSortOption("");
-      // Reset the sort order and return to the original order of all products
-      sortedProducts.sort((a, b) => a.id - b.id);
-      fetchDispatch(productActions.setSortOrder("asc")); // Assuming "asc" is the default sort order
+      sortOrder = "asc"; // Assuming "asc" is the default sort order
     } else {
       setSortOption(option);
-      let sortOrder: SortOrder;
+
       if (option === "name") {
         sortOrder = "asc";
       } else if (option === "price") {
         sortOrder = "desc";
-      } else if (option === "az") {
-        sortOrder = "asc";
-        // Perform alphabetical sorting here
-        sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
-      } else if (option === "za") {
-        sortOrder = "desc";
-        // Perform reverse alphabetical sorting here
-        sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
       } else {
-        // Set a default value for sortOrder if none of the conditions match
-        sortOrder = "asc";
+        sortOrder = "asc"; // Set a default value for sortOrder if none of the conditions match
       }
-      fetchDispatch(productActions.setSortOrder(sortOrder));
     }
+
+    functionDispatch(productActions.setSortOrder(sortOrder));
   };
+
   if (isLoading) {
     return (
       <Container sx={{ mt: 15, minHeight: 950 }}>
