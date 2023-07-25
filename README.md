@@ -13,4 +13,4 @@ The front end project uses React with TypeScript and Redux.
 2. Product detail API: `https://api.escuelajs.co/api/v1/products/name`
 
 ### Deploy Link
-wema-025c723.netlify.app
+https://wema-025c723.netlify.app/
